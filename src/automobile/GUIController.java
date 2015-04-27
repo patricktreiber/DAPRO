@@ -111,7 +111,7 @@ public class GUIController implements Initializable {
         }
         
         TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("ID");        
-        col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("aID"));
+        col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("id"));
         TableColumn<AutomodellDTO, String> col2 = new TableColumn<AutomodellDTO, String>("Hersteller");        
         col2.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("hersteller"));
         TableColumn<AutomodellDTO, String> col3 = new TableColumn<AutomodellDTO, String>("Bezeichnung");        

@@ -44,7 +44,7 @@ public class AutomodellDTO {
             int zuladung,
             String fuehrerscheinKlasse)
         {
-        
+        this.id = id;
         this.bezeichnung = bezeichnung; 
         this.hersteller = hersteller; 
         this.autoart = autoart; 
