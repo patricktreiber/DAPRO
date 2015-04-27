@@ -23,6 +23,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -37,12 +40,25 @@ public class GUIController implements Initializable {
     private DAOInterface dao;
     private ObservableList<String> bez_list;
     private ObservableList<String> her_list;
+    private ObservableList<AutomodellDTO> modell_list;
+    
+    @FXML
+    private TableView<AutomodellDTO> resultView;
     
     @FXML
     private ComboBox<String> cb_bezeichnung;
     
     @FXML
     private ComboBox<String> cb_hersteller;
+    
+    @FXML
+    private ComboBox<String> cb_autoart;
+    
+    @FXML
+    private ComboBox<String> cb_sitzplaetze;
+    
+    @FXML
+    private ComboBox<String> cb_treibstoff;
     
     @FXML
     private Button btn_search;
@@ -66,7 +82,6 @@ public class GUIController implements Initializable {
     //Listener für die Combobox-Auswahl    
     cb_hersteller.setOnAction((event) -> {
         String herst = cb_hersteller.getSelectionModel().getSelectedItem();
-        System.out.println("ComboBox Action (selected: " + herst + ")");
         bez_list.clear();
         bez_list.addAll(this.dao.getBezeichnungByHersteller(herst));
         cb_bezeichnung.setItems(bez_list);
@@ -84,25 +99,33 @@ public class GUIController implements Initializable {
         String treibstoff = "leer";
         
         
-        hersteller = cb_hersteller.getValue();
-        System.out.println("Hersteller :" + hersteller); 
+        hersteller = cb_hersteller.getValue();  
         bezeichnung = cb_bezeichnung.getValue();
-        System.out.println("Bezeichnung :" + bezeichnung); 
-        
+      
         Set<AutomodellDTO> modelle = dao.getAutomodelle(bezeichnung, hersteller, art, sitzpl, treibstoff);
         
+        modell_list = FXCollections.observableArrayList();
         for(AutomodellDTO a : modelle){
-            a.showAutoModellOnConsole();
+            modell_list.add(a);
+            System.out.println("ID vor View: " + a.getID());
         }
         
-        System.out.println(".............................");
-        System.out.println("Titel der Autohersteller");
-        Set<String> titles = dao.getHerstellerTitles();
-        for(String s : titles)
-            System.out.println(s);
-        System.out.println("Ende");
-            
-                       
+        TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("ID");        
+        col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("aID"));
+        TableColumn<AutomodellDTO, String> col2 = new TableColumn<AutomodellDTO, String>("Hersteller");        
+        col2.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("hersteller"));
+        TableColumn<AutomodellDTO, String> col3 = new TableColumn<AutomodellDTO, String>("Bezeichnung");        
+        col3.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("bezeichnung"));
+        TableColumn<AutomodellDTO, String> col4 = new TableColumn<AutomodellDTO, String>("PreisTag");        
+        col4.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("preisTag"));
+        
+        resultView.getColumns().add(col1);
+        resultView.getColumns().add(col2);
+        resultView.getColumns().add(col3);
+        resultView.getColumns().add(col4);
+      
+        resultView.setItems(modell_list);
+                  
         }
         
         
