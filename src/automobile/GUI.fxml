@@ -1,63 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="536.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="automobile.GUIController">
    <children>
-      <ScrollPane layoutY="-6.0" prefHeight="543.0" prefWidth="692.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <TabPane prefHeight="543.0" prefWidth="761.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Suche">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="458.0" prefWidth="723.0">
-                                 <children>
-                                    <Pane fx:id="bg_auswahl" layoutX="-9.0" layoutY="43.0" prefHeight="207.0" prefWidth="681.0" style="-fx-background-color: #007162;">
-                                       <children>
-                                          <Button fx:id="btn_search" layoutX="268.0" layoutY="127.0" mnemonicParsing="false" onAction="#buttonSearch" prefHeight="25.0" prefWidth="145.0" text="Search" />
-                                          <ComboBox fx:id="cb_bezeichnung" layoutX="193.0" layoutY="14.0" prefWidth="150.0" promptText="Bezeichnung" />
-                                          <ComboBox fx:id="cb_hersteller" layoutX="22.0" layoutY="14.0" prefWidth="150.0" promptText="Hersteller" />
-                                       </children>
-                                    </Pane>
-                                    <Label layoutX="212.0" layoutY="4.0" text="Bitte wählen Sie die Suchkriterien aus">
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font></Label>
-                                    <Pane layoutX="3.0" layoutY="275.0" prefHeight="232.0" prefWidth="683.0" style="-fx-background-color: #007162;">
-                                       <children>
-                                          <TableView id="resultView" fx:id="resultView" prefHeight="234.0" prefWidth="692.0">
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                       </children></Pane>
-                                    <Label layoutX="277.0" layoutY="247.0" prefHeight="21.0" prefWidth="139.0" text="Ihr Suchergebniss">
-                                       <font>
-                                          <Font name="System Bold" size="15.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Resvervierung">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+      <Pane fx:id="bg_search" prefHeight="132.0" prefWidth="692.0" style="-fx-background-color: #256789;">
+         <children>
+            <ComboBox layoutX="10.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Hersteller" />
+            <ComboBox layoutX="150.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Bezeichnung" />
+            <ComboBox layoutX="287.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Autoart" />
+            <ComboBox layoutX="425.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Sitzplätze" />
+            <ComboBox layoutX="563.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Treibstoff" />
+            <Label layoutX="206.0" layoutY="8.0" text="Bitte Suchkriterien auswählen" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="302.0" layoutY="82.0" mnemonicParsing="false" text="Suche starten" />
+         </children>
+      </Pane>
+      <Pane layoutY="132.0" prefHeight="25.0" prefWidth="692.0" style="-fx-background-color: #000;" />
+      <Pane layoutY="157.0" prefHeight="200.0" prefWidth="692.0">
+         <children>
+            <ListView prefHeight="200.0" prefWidth="692.0" />
+         </children>
+      </Pane>
+      <Pane layoutY="357.0" prefHeight="179.0" prefWidth="692.0" style="-fx-background-color: #256789;">
+         <children>
+            <Button layoutX="47.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Details" />
+            <ListView layoutY="53.0" prefHeight="78.0" prefWidth="692.0" />
+            <Button layoutX="551.0" layoutY="14.0" mnemonicParsing="false" text="Reservieren" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
