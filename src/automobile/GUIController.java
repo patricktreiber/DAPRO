@@ -79,13 +79,25 @@ public class GUIController implements Initializable {
         cb_bezeichnung.setItems(bez_list);
         cb_hersteller.setItems(her_list);
         
+        //Tabellenspalten anlegen
+         TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("ID");        
+        col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("id"));
+        TableColumn<AutomodellDTO, String> col2 = new TableColumn<AutomodellDTO, String>("Hersteller");        
+        col2.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("hersteller"));
+        TableColumn<AutomodellDTO, String> col3 = new TableColumn<AutomodellDTO, String>("Bezeichnung");        
+        col3.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("bezeichnung"));
+        TableColumn<AutomodellDTO, String> col4 = new TableColumn<AutomodellDTO, String>("PreisTag");        
+        col4.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("preisTag"));
+        resultView.getColumns().addAll(col1, col2, col3, col4);
+         
+        
     //Listener für die Combobox-Auswahl    
     cb_hersteller.setOnAction((event) -> {
         String herst = cb_hersteller.getSelectionModel().getSelectedItem();
         bez_list.clear();
         bez_list.addAll(this.dao.getBezeichnungByHersteller(herst));
         cb_bezeichnung.setItems(bez_list);
-        
+    
     });
     } 
        
@@ -98,34 +110,23 @@ public class GUIController implements Initializable {
         int sitzpl = 0; 
         String treibstoff = "leer";
         
-        
+        //Werte für Suche aus Combobox holen
         hersteller = cb_hersteller.getValue();  
         bezeichnung = cb_bezeichnung.getValue();
       
+        //Modelle aus DB holen
         Set<AutomodellDTO> modelle = dao.getAutomodelle(bezeichnung, hersteller, art, sitzpl, treibstoff);
         
+        //HashSet mit Automodellen in observableList parsen
         modell_list = FXCollections.observableArrayList();
         for(AutomodellDTO a : modelle){
             modell_list.add(a);
             System.out.println("ID vor View: " + a.getID());
         }
         
-        TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("ID");        
-        col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("id"));
-        TableColumn<AutomodellDTO, String> col2 = new TableColumn<AutomodellDTO, String>("Hersteller");        
-        col2.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("hersteller"));
-        TableColumn<AutomodellDTO, String> col3 = new TableColumn<AutomodellDTO, String>("Bezeichnung");        
-        col3.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("bezeichnung"));
-        TableColumn<AutomodellDTO, String> col4 = new TableColumn<AutomodellDTO, String>("PreisTag");        
-        col4.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("preisTag"));
-        
-        resultView.getColumns().add(col1);
-        resultView.getColumns().add(col2);
-        resultView.getColumns().add(col3);
-        resultView.getColumns().add(col4);
-      
+        //TableView updaten
         resultView.setItems(modell_list);
-                  
+                 
         }
         
         
