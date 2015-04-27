@@ -216,7 +216,7 @@ public class DAO implements DAOInterface{
     }
 
     @Override
-    public void setReservierung(int kID, int aID, String startDate, String endDate) {
+    public void addReservierung(int kID, int aID, String startDate, String endDate) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
         //Date date = new Date();
@@ -234,6 +234,26 @@ public class DAO implements DAOInterface{
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     
+    }
+
+    @Override
+    public Set<KundeDTO> getKundeDTObyName(String vorname, String nachname) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public KundeDTO getKundebyID(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addKundeDTO(KundeDTO kundeDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<KundeDTO> getAllKunden() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
