@@ -34,21 +34,6 @@
                                     <Pane layoutX="3.0" layoutY="275.0" prefHeight="232.0" prefWidth="683.0" style="-fx-background-color: #007162;">
                                        <children>
                                           <TableView id="resultView" fx:id="resultView" prefHeight="234.0" prefWidth="692.0">
-                                            <columns>
-                                              <TableColumn id="idCol" fx:id="idCol" prefWidth="75.0" text="ID" />
-                                              <TableColumn id="bezeichnungCol" fx:id="bezeichnungCol" prefWidth="88.0" text="Bezeichnung" />
-                                                <TableColumn id="herstellerCol" fx:id="herstellerCol" prefWidth="75.0" text="Hersteller" />
-                                                <TableColumn id="autoartCol" fx:id="autoartCol" prefWidth="75.0" text="Autoart" />
-                                                <TableColumn id="sitzplaetzeCol" fx:id="sitzplaetzeCol" prefWidth="75.0" text="Sitzplätze" />
-                                                <TableColumn id="kwCol" fx:id="kwCol" prefWidth="75.0" text="kw" />
-                                                <TableColumn id="treibstoffCol" fx:id="treibstoffCol" prefWidth="75.0" text="Treibstoff" />
-                                                <TableColumn id="preistagCol" fx:id="preistagCol" prefWidth="75.0" text="PreisTag" />
-                                                <TableColumn id="preiskmCol" fx:id="preiskmCol" prefWidth="75.0" text="PreisKM" />
-                                                <TableColumn id="achsenCol" fx:id="achsenCol" prefWidth="75.0" text="Achsen" />
-                                                <TableColumn id="ladevolumenCol" fx:id="ladevolumenCol" prefWidth="75.0" text="Ladevolumen" />
-                                                <TableColumn id="zuladungCol" fx:id="zuladungCol" prefWidth="75.0" text="Zuladung" />
-                                                <TableColumn id="fuehrklasseCol" fx:id="fuehrklasseCol" prefWidth="75.0" text="Führerscheinklasse" />
-                                            </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                              </columnResizePolicy>
