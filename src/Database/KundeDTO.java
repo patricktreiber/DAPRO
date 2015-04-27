@@ -10,25 +10,25 @@ package Database;
  * @author Patrick
  */
 public class KundeDTO {
-    
+
     private int id;
     private String vorname;
     private String nachname;
-    private int plz;
+    private String plz;
     private String ort;
     private String strasse;
     private String email;
-    private int telNr;
-    
+    private String telNr;
+
     public KundeDTO(int id,
-                    String vorname,
-                    String nachname,
-                    int plz,
-                    String ort,
-                    String strasse,
-                    String email,
-                    int telNr){
-               
+            String vorname,
+            String nachname,
+            String plz,
+            String ort,
+            String strasse,
+            String email,
+            String telNr) {
+
         this.id = id;
         this.vorname = vorname;
         this.nachname = nachname;
@@ -37,7 +37,7 @@ public class KundeDTO {
         this.strasse = strasse;
         this.email = email;
         this.telNr = telNr;
-        
+
     }
 
     /**
@@ -85,14 +85,14 @@ public class KundeDTO {
     /**
      * @return the plz
      */
-    public int getPlz() {
+    public String getPlz() {
         return plz;
     }
 
     /**
      * @param plz the plz to set
      */
-    public void setPlz(int plz) {
+    public void setPlz(String plz) {
         this.plz = plz;
     }
 
@@ -141,15 +141,15 @@ public class KundeDTO {
     /**
      * @return the telNr
      */
-    public int getTelNr() {
+    public String getTelNr() {
         return telNr;
     }
 
     /**
      * @param telNr the telNr to set
      */
-    public void setTelNr(int telNr) {
+    public void setTelNr(String telNr) {
         this.telNr = telNr;
     }
-    
+
 }

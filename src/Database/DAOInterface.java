@@ -24,6 +24,12 @@ public interface DAOInterface {
    Set<String> getHerstellerTitles();
    Set<String> getAutoartTitles();
    Set<String> getTreibstoffTitles();
-   void setReservierung(int kID, int aID, String startDate, String endDate);
+   
+   Set<KundeDTO> getAllKunden();
+   Set<KundeDTO> getKundeDTObyName(String vorname, String nachname);
+   KundeDTO getKundebyID(int id);
+   void addKundeDTO(KundeDTO kundeDTO);
+   
+   void addReservierung(int kID, int aID, String startDate, String endDate);
     
 }
