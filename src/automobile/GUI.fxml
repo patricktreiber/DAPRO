@@ -9,8 +9,8 @@
    <children>
       <Pane fx:id="bg_search" prefHeight="132.0" prefWidth="692.0" style="-fx-background-color: #256789;">
          <children>
-            <ComboBox layoutX="10.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Hersteller" />
-            <ComboBox layoutX="150.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Bezeichnung" />
+            <ComboBox fx:id="cb_hersteller" layoutX="10.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Hersteller" />
+            <ComboBox fx:id="cb_bezeichnung" layoutX="150.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Bezeichnung" />
             <ComboBox layoutX="287.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Autoart" />
             <ComboBox layoutX="425.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Sitzplätze" />
             <ComboBox layoutX="563.0" layoutY="44.0" prefHeight="25.0" prefWidth="111.0" promptText="Treibstoff" />
@@ -19,13 +19,13 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button layoutX="302.0" layoutY="82.0" mnemonicParsing="false" text="Suche starten" />
+            <Button fx:id="btn_search" layoutX="302.0" layoutY="82.0" mnemonicParsing="false" onAction="#buttonSearch" text="Suche starten" />
          </children>
       </Pane>
       <Pane layoutY="132.0" prefHeight="25.0" prefWidth="692.0" style="-fx-background-color: #000;" />
       <Pane layoutY="157.0" prefHeight="200.0" prefWidth="692.0">
          <children>
-            <ListView prefHeight="200.0" prefWidth="692.0" />
+            <TableView fx:id="resultView" prefHeight="200.0" prefWidth="692.0" />
          </children>
       </Pane>
       <Pane layoutY="357.0" prefHeight="179.0" prefWidth="692.0" style="-fx-background-color: #256789;">

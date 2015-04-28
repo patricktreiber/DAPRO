@@ -122,7 +122,7 @@ public class GUIController implements Initializable {
         modell_list = FXCollections.observableArrayList();
         for(AutomodellDTO a : modelle){
             modell_list.add(a);
-            System.out.println("ID vor View: " + a.getID());
+            //System.out.println("ID vor View: " + a.getID());
         }
         
         //TableView updaten
