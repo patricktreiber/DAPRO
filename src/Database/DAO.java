@@ -360,14 +360,13 @@ public class DAO implements DAOInterface{
                     + "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
-            stmt.setInt(1, kundeDTO.getId());
-            stmt.setString(2, kundeDTO.getVorname());
-            stmt.setString(3, kundeDTO.getNachname());
-            stmt.setString(4, kundeDTO.getPlz());
-            stmt.setString(5, kundeDTO.getOrt());
-            stmt.setString(6, kundeDTO.getStrasse());
-            stmt.setString(7, kundeDTO.getEmail());
-            stmt.setString(8, kundeDTO.getTelNr());
+            stmt.setString(1, kundeDTO.getVorname());
+            stmt.setString(2, kundeDTO.getNachname());
+            stmt.setString(3, kundeDTO.getPlz());
+            stmt.setString(4, kundeDTO.getOrt());
+            stmt.setString(5, kundeDTO.getStrasse());
+            stmt.setString(6, kundeDTO.getEmail());
+            stmt.setString(7, kundeDTO.getTelNr());
             
             stmt.executeUpdate();
             
@@ -388,6 +387,35 @@ public class DAO implements DAOInterface{
     public Set<KundeDTO> getAllKunden() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.connection = createConnection();
+        String sql = "SELECT * FROM `kunde`";
+        Set<KundeDTO> kundeSet = new HashSet<KundeDTO>();
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                kundeSet.add(new KundeDTO(rs.getInt("ID"),
+                                   rs.getString("Vorname"),
+                                   rs.getString("Nachname"),
+                                   rs.getString("PLZ"),
+                                   rs.getString("Ort"),
+                                   rs.getString("Strasse"),
+                                   rs.getString("EMail"),
+                                   rs.getString("TelNr")));
+            }
+            return kundeSet;
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+			if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
+		}
         return null;
     }
     
