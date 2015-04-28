@@ -40,9 +40,9 @@ public class DAO implements DAOInterface{
     
     private Connection createConnection(){
         try {
-                        System.out.println("* Treiber laden");
+                        //System.out.println("* Treiber laden");
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("* Verbindung aufbauen");
+			//System.out.println("* Verbindung aufbauen");
 			String url = "jdbc:mysql://" + hostname + ":" + port + "/" + dbname;
 			this.connection = DriverManager.getConnection(url, user, password);
 			System.out.println("* Verbindung aufgebaut");
@@ -62,6 +62,7 @@ public class DAO implements DAOInterface{
                                                  int sitzpl, 
                                                  String treibstoff)
     {
+        this.connection = createConnection();
         HashSet modelle = new HashSet<AutomodellDTO>();
         //Build String for SQL Statement
         String sql = "SELECT * FROM automodell WHERE ";
@@ -142,7 +143,15 @@ public class DAO implements DAOInterface{
             
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally {
+			if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
+		}
         
         return null;
     }
@@ -176,7 +185,8 @@ public class DAO implements DAOInterface{
    }
    
    public Set<String> executeTitlesQuery(String title){
-            HashSet titles = new HashSet<String>();
+       this.connection = createConnection();
+       HashSet titles = new HashSet<String>();
        String sql = "SELECT " + title + " FROM automodell";
         try {
             ResultSet rs = this.connection.createStatement().executeQuery(sql);
@@ -188,13 +198,22 @@ public class DAO implements DAOInterface{
            
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally {
+			if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
+		}
    
     return null;
    }
 
     @Override
     public Set<String> getBezeichnungByHersteller(String hersteller) {
+       this.connection = createConnection();
        HashSet titles = new HashSet<String>();
         
        String sql = "SELECT Bezeichnung FROM automodell WHERE Hersteller = '" + hersteller +"'";
@@ -210,7 +229,15 @@ public class DAO implements DAOInterface{
            
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally {
+			if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
+		}
    
     return null;
     }
@@ -225,7 +252,7 @@ public class DAO implements DAOInterface{
         
         //Date date = new Date();
         //Timestamp tstp = new Timestamp(date.);
-        
+        this.connection = createConnection();
         String sql = "INSERT INTO `automobile`.`reservierung` (`ID`, `KundeID`, `ModellID`, `Beginn`, `Ende`) "
                     + "VALUES (NULL, ?, ?, ?, ?)";
         
@@ -236,13 +263,25 @@ public class DAO implements DAOInterface{
            // stmt.setTimestamp(3, new Timestamp());
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally {
+			if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
+		}
     
     }
-
+    /**
+    * Returns Set of KundeDTO by vorname and nachname
+    * 
+    */
     @Override
     public Set<KundeDTO> getKundeDTObyName(String vorname, String nachname) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.connection = createConnection();
         String sql = "SELECT * FROM `kunde` WHERE Vorname = ? AND Nachname = ?";
         Set<KundeDTO> k = new HashSet<KundeDTO>();
         try {
@@ -264,23 +303,92 @@ public class DAO implements DAOInterface{
             return k;
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }finally {
+			if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
+		}
+        return null;
+    }
+    
+    /**
+    * Returns KundeDTO by ID
+    * 
+    */
+    @Override
+    public KundeDTO getKundebyID(int id) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.connection = createConnection();
+        String sql = "SELECT * FROM `kunde` WHERE ID = ?";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+            
+            ResultSet rs = stmt.executeQuery();
+            KundeDTO k = new KundeDTO(rs.getInt("ID"),
+                                   rs.getString("Vorname"),
+                                   rs.getString("Nachname"),
+                                   rs.getString("PLZ"),
+                                   rs.getString("Ort"),
+                                   rs.getString("Strasse"),
+                                   rs.getString("EMail"),
+                                   rs.getString("TelNr"));
+            return k;
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+			if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
+		}
         return null;
     }
 
     @Override
-    public KundeDTO getKundebyID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void addKundeDTO(KundeDTO kundeDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.connection = createConnection();
+        String sql = "INSERT INTO `automobile`.`kunde` (`ID`, `Vorname`, `Nachname`, `PLZ`, `Ort`, `Strasse`, `EMail`, `TelNr`) "
+                    + "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            stmt.setInt(1, kundeDTO.getId());
+            stmt.setString(2, kundeDTO.getVorname());
+            stmt.setString(3, kundeDTO.getNachname());
+            stmt.setString(4, kundeDTO.getPlz());
+            stmt.setString(5, kundeDTO.getOrt());
+            stmt.setString(6, kundeDTO.getStrasse());
+            stmt.setString(7, kundeDTO.getEmail());
+            stmt.setString(8, kundeDTO.getTelNr());
+            
+            stmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+			if (connection != null) {
+                            try {
+                                connection.close();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+			}
+		}
     }
 
     @Override
     public Set<KundeDTO> getAllKunden() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.connection = createConnection();
+        return null;
     }
     
 }
