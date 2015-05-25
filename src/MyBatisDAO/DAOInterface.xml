@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyBatisDAO/DAOInterface.xml">
+    
+    <resultMap id="KundeMap" type="Database/KundeDTO">
+        <KundeMap property="id" column="KUNDE_ID"/>
+        <KundeMap property="vorname" column="KUNDE_VORNAME"/>
+        <KundeMap property="nachname" column="KUNDE_NACHNAME"/>
+        <KundeMap property="plz" column="KUNDE_PLZ"/>
+        <KundeMap property="ort" column="KUNDE_ORT"/>
+        <KundeMap property="strasse" column="KUNDE_STRASSE"/>
+        <KundeMap property="email" column="KUNDE_EMAIL"/>
+        <KundeMap property="telNr" column="KUNDE_TELNR"/>
+    </resultMap>
+    <resultMap id="AutomodellMap" type="Database/AutomodellDTO">
+        <AutomodellMap property="id" column="AutoM_ID"/>
+        <AutomodellMap property="bezeichnung" column="AutoM_BEZ"/>
+        <AutomodellMap property="hersteller" column="AutoM_HER"/>
+        <AutomodellMap property="autoart" column="AutoM_AART"/>
+        <AutomodellMap property="sitzplaetze" column="AutoM_SITZPL"/>
+        <AutomodellMap property="kw" column="AutoM_KW"/>
+        <AutomodellMap property="treibstoff" column="AutoM_TRST"/>
+        <AutomodellMap property="preisTag" column="AutoM_PRTAG"/>
+        <AutomodellMap property="preisKM" column="AutoM_PRKM"/>
+        <AutomodellMap property="achsen" column="AutoM_ACHSEN"/>
+        <AutomodellMap property="ladevolumen" column="AutoM_LV"/>
+        <AutomodellMap property="zuladung" column="AutoM_ZULA"/>
+        <AutomodellMap property="fuehrerscheinKlasse" column="AutoM_FURK"/>
+    </resultMap>
+    
+  <select id="getAutomodelle" resultMap="AutomodellMap">
+      SELECT * FROM automodell
+      <trim prefix="WHERE" prefixOverrides="AND |OR ">
+          
+          <if test="bezeichnung != null">
+              bezeichnung = #{bezeichnung}
+          </if>
+          
+          <if test="hersteller != null">
+              AND hersteller = #{hersteller}
+          </if>
+          
+          <if test="art > 0">
+              AND Autoart = #{art}
+          </if>
+          
+          <if test="sitzpl > 0">
+              AND Sitzplaetze = #{sitzpl}
+          </if>
+          
+          <if test="treibstoff != null">
+              AND Treibstoff = #{treibstoff}
+          </if>
+          
+      </trim>
+  </select> 
+  
+  <select id="getTitels" resultType="String">
+    SELECT #{title} FROM automodell
+  </select>
+  
+  <select id="getAllKunden" resultMap="KundeMap">
+    SELECT * FROM kunde
+  </select>
+  
+  <select id="getKundeDTObyName" resultType="KundeMap">
+    SELECT * FROM kunde WHERE Vorname = #{vorname} AND Nachname = #{nachname}
+  </select>
+  
+  <select id="getBezeichnungByHersteller" resultType="String">
+    SELECT Bezeichnung FROM automodell WHERE Hersteller = #{hersteller}
+  </select>
+  
+  <select id="getKundebyID" parameterType="int" resultType="KundeMap">
+    SELECT * FROM kunde WHERE ID = #{id}
+  </select>
+  
+   <insert id="addKundeDTO">
+    INSERT INTO automobile.kunde (ID, Vorname, Nachname, PLZ, Ort, Strasse, EMail, TelNr) 
+    VALUES (NULL, #{vorname}, #{nachname}, #{plz}, #{ort}, #{strasse}, #{email}, #{telnr})
+  </insert>
+  
+  <insert id="addReservierung">
+    INSERT INTO automobile.reservierung (ID, KundeID, ModellID, Beginn, Ende) 
+    VALUES (NULL, #{kID}, #{aID}, #{startDate}, #{endDate})
+  </insert>
+  
+</mapper>
+ 
+   

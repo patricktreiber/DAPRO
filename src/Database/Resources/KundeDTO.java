@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package Database.Resources;
 
 /**
  *
@@ -20,6 +20,18 @@ public class KundeDTO {
     private String email;
     private String telNr;
 
+    /**
+     *
+     * Konstruktor für Instanzen die aus der DB gelesen werden.
+     * @param id
+     * @param vorname
+     * @param nachname
+     * @param plz
+     * @param ort
+     * @param strasse
+     * @param email
+     * @param telNr
+     */
     public KundeDTO(int id,
             String vorname,
             String nachname,
@@ -30,6 +42,35 @@ public class KundeDTO {
             String telNr) {
 
         this.id = id;
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.plz = plz;
+        this.ort = ort;
+        this.strasse = strasse;
+        this.email = email;
+        this.telNr = telNr;
+
+    }
+    
+    /**
+     *
+     * Konstruktor für Instanzen welche in die DB geschrieben werden.
+     * @param vorname
+     * @param nachname
+     * @param plz
+     * @param ort
+     * @param strasse
+     * @param email
+     * @param telNr
+     */
+    public KundeDTO(String vorname,
+            String nachname,
+            String plz,
+            String ort,
+            String strasse,
+            String email,
+            String telNr) {
+
         this.vorname = vorname;
         this.nachname = nachname;
         this.plz = plz;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database;
+package Database.Resources;
 
 /**
  *
@@ -29,7 +29,7 @@ public class AutomodellDTO {
  * 
  * Constructor for AutoDTO Class 
  */    
-    AutomodellDTO(
+    public AutomodellDTO(
             int id,
             String bezeichnung, 
             String hersteller, 
@@ -60,10 +60,6 @@ public class AutomodellDTO {
         
     }
 
-    AutomodellDTO() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     /**
      *Ausgabe der Automodelle auf der Konsole
      */
