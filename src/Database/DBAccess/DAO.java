@@ -9,6 +9,8 @@ import Database.Resources.KundeDTO;
 import Database.Resources.AutomodellDTO;
 import Database.Resources.ReservierungDTO;
 import java.sql.Connection;
+import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -222,9 +224,8 @@ public class DAO implements DAOInterface {
         /**
          * **************Bsp.: String -> Timestamp**************************
          *
-         * String time = this.cb_time.getValue(); 
-         * LocalDate ldate = datePicker.getValue(); 
-         * String sdate = ldate.toString();
+         * String time = this.cb_time.getValue(); LocalDate ldate =
+         * datePicker.getValue(); String sdate = ldate.toString();
          * System.out.println("Reservierung" + "\n" + "Datum: " + sdate + "\n" +
          * "Uhrzeit ab: " + time + "Uhr" + "\n"); '2015-05-14 12:00:00' String
          * datetime = sdate + " " + time + ":00.0";
@@ -237,14 +238,26 @@ public class DAO implements DAOInterface {
                 + "VALUES (NULL, ?, ?, ?, ?)";
 
         try {
+            this.connection.setAutoCommit(false);
+            DatabaseMetaData dbmd = this.connection.getMetaData();
+            if (dbmd.supportsTransactionIsolationLevel(TRANSACTION_SERIALIZABLE)) {
+                this.connection.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+                System.out.println("Transaction_Serializable");
+            }
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, kID);
             stmt.setInt(2, aID);
             stmt.setTimestamp(3, startDate);
             stmt.setTimestamp(4, endDate);
             stmt.executeUpdate();
+            this.connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } finally {
             if (connection != null) {
                 try {
@@ -348,6 +361,12 @@ public class DAO implements DAOInterface {
         String sql = "INSERT INTO `automobile`.`kunde` (`ID`, `Vorname`, `Nachname`, `PLZ`, `Ort`, `Strasse`, `EMail`, `TelNr`) "
                 + "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
         try {
+            this.connection.setAutoCommit(false);
+            DatabaseMetaData dbmd = this.connection.getMetaData();
+            if (dbmd.supportsTransactionIsolationLevel(TRANSACTION_SERIALIZABLE)) {
+                this.connection.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+                System.out.println("Transaction_Serializable");
+            }
             PreparedStatement stmt = this.connection.prepareStatement(sql);
             stmt.setString(1, kundeDTO.getVorname());
             stmt.setString(2, kundeDTO.getNachname());
@@ -358,9 +377,15 @@ public class DAO implements DAOInterface {
             stmt.setString(7, kundeDTO.getTelNr());
 
             stmt.executeUpdate();
+            this.connection.commit();
 
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } finally {
             if (connection != null) {
                 try {
@@ -413,11 +438,23 @@ public class DAO implements DAOInterface {
         this.connection = createConnection();
         String sql = "DELETE FROM automobile.kunde WHERE kunde.ID = ?";
         try {
+            this.connection.setAutoCommit(false);
+            DatabaseMetaData dbmd = this.connection.getMetaData();
+            if (dbmd.supportsTransactionIsolationLevel(TRANSACTION_SERIALIZABLE)) {
+                this.connection.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+                System.out.println("Transaction_Serializable");
+            }
             PreparedStatement stmt = this.connection.prepareStatement(sql);
             stmt.setInt(1, id);
             stmt.executeUpdate();
+            this.connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } finally {
             if (connection != null) {
                 try {
@@ -434,11 +471,23 @@ public class DAO implements DAOInterface {
         this.connection = createConnection();
         String sql = "DELETE FROM automobile.reservierung WHERE reservierung.ID = ?";
         try {
+            this.connection.setAutoCommit(false);
+            DatabaseMetaData dbmd = this.connection.getMetaData();
+            if (dbmd.supportsTransactionIsolationLevel(TRANSACTION_SERIALIZABLE)) {
+                this.connection.setTransactionIsolation(TRANSACTION_SERIALIZABLE);
+                System.out.println("Transaction_Serializable");
+            }
             PreparedStatement stmt = this.connection.prepareStatement(sql);
             stmt.setInt(1, id);
             stmt.executeUpdate();
+            this.connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } finally {
             if (connection != null) {
                 try {
@@ -479,19 +528,19 @@ public class DAO implements DAOInterface {
                 }
             }
         }
-        
+
         return null;
     }
 
     @Override
     public Set<ReservierungDTO> getReservierungByIDs(int k_ID, int m_ID) {
-       this.connection = createConnection();
+        this.connection = createConnection();
         String sql = "SELECT * FROM `reservierung` WHERE KundeID = ? AND ModellID = ?";
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
             stmt.setInt(1, k_ID);
             stmt.setInt(2, m_ID);
-     
+
             Set<ReservierungDTO> resSet = new HashSet<ReservierungDTO>();
             ResultSet rs = stmt.executeQuery();
 
@@ -514,7 +563,7 @@ public class DAO implements DAOInterface {
                 }
             }
         }
-        
+
         return null;
     }
 
