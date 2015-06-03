@@ -12,6 +12,7 @@ import Database.DBAccess.DAOInterface;
 import Database.Resources.KundeDTO;
 import java.net.URL;
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.collections.FXCollections;
@@ -20,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -56,6 +58,11 @@ public class GUIController implements Initializable {
     private String k_vorname;
     private int kid;
     
+    @FXML
+    private DatePicker start_date;
+    
+    @FXML
+    private DatePicker ende_date;
     
     @FXML
     private TextField her_txt;
@@ -240,6 +247,22 @@ public class GUIController implements Initializable {
         
         cb_kunde_nachname.setItems(kunden_list);
         cb_kunde_vorname.setItems(kunden_list);
+        
+    }
+    
+    @FXML
+    public void reserverationPrepare(){
+        LocalDate sdate =start_date.getValue();
+        System.out.println(sdate);
+        
+        LocalDate edate = ende_date.getValue();
+        System.out.println(edate);
+        
+        System.out.println(kid);
+        System.out.println(aid);
+        
+        this.dao.addReservierung(kid, aid, null, null);
+        
         
     }
        
