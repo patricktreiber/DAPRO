@@ -12,7 +12,9 @@ import Database.DBAccess.DAOInterface;
 import Database.Resources.KundeDTO;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.collections.FXCollections;
@@ -69,6 +71,9 @@ public class GUIController implements Initializable {
 
     @FXML
     private TableView<AutomodellDTO> resultView;
+    
+    @FXML
+    private ComboBox<String> cb_time;
 
     @FXML
     private ComboBox<String> cb_kunde_nachname;
@@ -141,6 +146,13 @@ public class GUIController implements Initializable {
         cb_autoart.setItems(autoart_list);
         cb_sitzplaetze.setItems(sitz_list);
         cb_treibstoff.setItems(treib_list);
+        
+        ArrayList<String> myTime = new ArrayList<String>();
+        myTime.add("12:00:00");
+        myTime.add("13:00:00");
+        myTime.add("14:00:00");
+        myTime.add("15:00:00");
+        cb_time.getItems().addAll(myTime);
         
 
         //Tabellenspalten anlegen
@@ -258,10 +270,27 @@ public class GUIController implements Initializable {
         LocalDate edate = ende_date.getValue();
         System.out.println(edate);
         
+
+        String time = this.cb_time.getValue();
+        
+        String startdate = sdate.toString();
+        String endedate = edate.toString();
+        
+        System.out.println("Reservierung" + "\n" + "Datum: " + startdate + "\n" + "Uhrzeit ab: " + time + "Uhr" + "\n");
+        
+        String datetime_s = sdate + " " + time;
+        String datetime_e = edate + " " + time;
+        
+        System.out.println(datetime_s);
+        System.out.println(datetime_e);
+        
+        Timestamp tstart = Timestamp.valueOf(datetime_s);
+        Timestamp tende = Timestamp.valueOf(datetime_e);
+        
         System.out.println(kid);
         System.out.println(aid);
         
-        this.dao.addReservierung(kid, aid, null, null);
+        this.dao.addReservierung(kid, aid, tstart, tende);
         
         
     }
