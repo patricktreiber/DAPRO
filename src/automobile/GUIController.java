@@ -9,6 +9,7 @@ package automobile;
 import Database.Resources.AutomodellDTO;
 import Database.DBAccess.DAO;
 import Database.DBAccess.DAOInterface;
+import Database.Resources.KundeDTO;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
@@ -19,8 +20,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -34,13 +37,38 @@ public class GUIController implements Initializable {
     private Connection conn;
     private String hersteller;
     private DAOInterface dao;
+    
     private ObservableList<String> bez_list;
     private ObservableList<String> her_list;
+    private ObservableList<String> autoart_list;
+    private ObservableList<String> sitz_list;
+    private ObservableList<String> treib_list;
+    private ObservableList<String> kunden_list;
+    
     private ObservableList<AutomodellDTO> modell_list;
+    
+    private String her;
+    private String bez;
+    private int aid;
+    
+    private Set<KundeDTO> kunde_set;
+    private String k_nachname;
+    private String k_vorname;
+    private int kid;
+    
+    
+    @FXML
+    private TextField her_txt;
 
     @FXML
     private TableView<AutomodellDTO> resultView;
 
+    @FXML
+    private ComboBox<String> cb_kunde_nachname;
+    
+    @FXML
+    private ComboBox<String> cb_kunde_vorname; 
+    
     @FXML
     private ComboBox<String> cb_bezeichnung;
 
@@ -63,10 +91,19 @@ public class GUIController implements Initializable {
     private Button btn_refresh;
     
     @FXML
+    private Button btn_choose;
+    
+    @FXML
     private Button btn_reservation;
     
     @FXML
     private Button btn_kd_add;
+    
+    @FXML
+    private Button btn_her_set;
+    
+    @FXML
+    private Button btn_bez_set;
 
     /**
      * Initializes the controller class.
@@ -79,10 +116,25 @@ public class GUIController implements Initializable {
         //Create and fill comboboxes with data from database-layer
         bez_list = FXCollections.observableArrayList();
         her_list = FXCollections.observableArrayList();
+        autoart_list = FXCollections.observableArrayList();
+        sitz_list = FXCollections.observableArrayList();
+        treib_list = FXCollections.observableArrayList();
+        kunden_list = FXCollections.observableArrayList();
+        
+        
         her_list.addAll(this.dao.getTitles("Hersteller"));
         bez_list.addAll(this.dao.getTitles("Bezeichnung"));
+        autoart_list.addAll(this.dao.getTitles("Autoart"));
+        sitz_list.addAll(this.dao.getTitles("Sitzplaetze"));
+        treib_list.addAll(this.dao.getTitles("Treibstoff"));
+        
+        
         cb_bezeichnung.setItems(bez_list);
         cb_hersteller.setItems(her_list);
+        cb_autoart.setItems(autoart_list);
+        cb_sitzplaetze.setItems(sitz_list);
+        cb_treibstoff.setItems(treib_list);
+        
 
         //Tabellenspalten anlegen
        // TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("ID");
@@ -91,6 +143,8 @@ public class GUIController implements Initializable {
         col2.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("hersteller"));
         TableColumn<AutomodellDTO, String> col3 = new TableColumn<AutomodellDTO, String>("Bezeichnung");
         col3.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("bezeichnung"));
+        TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("Autoart");
+        col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("autoart"));
         TableColumn<AutomodellDTO, String> col4 = new TableColumn<AutomodellDTO, String>("PreisTag");
         col4.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("preisTag"));
         TableColumn<AutomodellDTO, String> col5 = new TableColumn<AutomodellDTO, String>("Sitzplaetze");
@@ -98,9 +152,9 @@ public class GUIController implements Initializable {
         TableColumn<AutomodellDTO, String> col6 = new TableColumn<AutomodellDTO, String>("Treibstoff");
         col6.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("treibstoff"));
         
-        resultView.getColumns().addAll(col2, col3, col4, col5, col6);
+        resultView.getColumns().addAll(col2, col3, col1, col4, col5, col6);
 
-        //Listener für die Combobox-Auswahl    
+        //Listener für die Combobox-Auswahl  Hersteller mit Abhängigkeit Bezeichnung  
         cb_hersteller.setOnAction((event) -> {
             String herst = cb_hersteller.getSelectionModel().getSelectedItem();
             bez_list.clear();
@@ -137,5 +191,57 @@ public class GUIController implements Initializable {
         resultView.setItems(modell_list);
 
     }
+    
+    @FXML
+    public void buttonRefresh(){
+        
+        cb_hersteller.getSelectionModel().clearSelection();
+        cb_bezeichnung.getSelectionModel().clearSelection();
+        cb_autoart.getSelectionModel().clearSelection();
+    }
+    
+    @FXML
+    public void getChoose(){
+        
+               
+        for (AutomodellDTO a : resultView.getSelectionModel().getSelectedItems()) {
+            
+            this.her = a.getHersteller();
+            this.bez = a.getBezeichnung();
+            this.aid = a.getID();
+            System.out.println(aid);
+                    
+        }
+        
+        System.out.println(her);
+        btn_her_set.setText(her);
+        btn_bez_set.setText(bez);
+        
+        
+    }
+    
+    @FXML
+    public void getKD(){
+        
+        kunde_set = this.dao.getAllKunden();
+        
+        for(KundeDTO k : kunde_set){
+            
+            k_nachname = k.getNachname();
+            k_vorname = k.getVorname();
+            kid = k.getId();
+            
+            System.out.println(kid);
+            
+        }
+        
+        kunden_list.add(k_nachname);
+        kunden_list.add(k_vorname);
+        
+        cb_kunde_nachname.setItems(kunden_list);
+        cb_kunde_vorname.setItems(kunden_list);
+        
+    }
+       
 
 }
