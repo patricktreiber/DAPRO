@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="536.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="automobile.GUIController">
+<AnchorPane id="AnchorPane" prefHeight="421.0" prefWidth="1026.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="automobile.GUIController">
    <children>
       <Pane fx:id="bg_search" prefHeight="132.0" prefWidth="692.0" style="-fx-background-color: #256789;">
          <children>
@@ -19,21 +19,28 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="btn_search" layoutX="302.0" layoutY="82.0" mnemonicParsing="false" onAction="#buttonSearch" text="Suche starten" />
+            <Button fx:id="btn_search" layoutX="206.0" layoutY="93.0" mnemonicParsing="false" onAction="#buttonSearch" prefHeight="25.0" prefWidth="126.0" text="Suche starten" />
+            <Button fx:id="btn_refresh" layoutX="374.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Suche zurücksetzen" />
          </children>
       </Pane>
-      <Pane layoutY="132.0" prefHeight="25.0" prefWidth="692.0" style="-fx-background-color: #000;" />
+      <Pane layoutY="132.0" prefHeight="25.0" prefWidth="1052.0" style="-fx-background-color: #000;" />
       <Pane layoutY="157.0" prefHeight="200.0" prefWidth="692.0">
          <children>
             <TableView fx:id="resultView" prefHeight="200.0" prefWidth="692.0" />
          </children>
       </Pane>
-      <Pane layoutY="357.0" prefHeight="179.0" prefWidth="692.0" style="-fx-background-color: #256789;">
+      <Pane layoutY="357.0" prefHeight="64.0" prefWidth="692.0" style="-fx-background-color: #256789;" />
+      <Pane layoutX="692.0" prefHeight="421.0" prefWidth="14.0" style="-fx-background-color: #000;" />
+      <Pane layoutX="706.0" prefHeight="132.0" prefWidth="346.0" style="-fx-background-color: #256789;">
          <children>
-            <Button layoutX="47.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="88.0" text="Details" />
-            <ListView layoutY="53.0" prefHeight="78.0" prefWidth="692.0" />
-            <Button layoutX="551.0" layoutY="14.0" mnemonicParsing="false" text="Reservieren" />
+            <TextField editable="false" layoutX="85.0" layoutY="41.0" prefHeight="25.0" prefWidth="177.0" text="Reservierung eines Fahrzeugs" />
          </children>
       </Pane>
+      <Pane layoutX="706.0" layoutY="357.0" prefHeight="64.0" prefWidth="346.0" style="-fx-background-color: #256789;">
+         <children>
+            <Button fx:id="btn_kd_add" layoutX="195.0" layoutY="20.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Kunden hinzufügen" />
+         </children>
+      </Pane>
+      <Button fx:id="btn_reservation" layoutX="729.0" layoutY="377.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Reservieren" />
    </children>
 </AnchorPane>

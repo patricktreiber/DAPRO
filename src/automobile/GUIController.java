@@ -58,6 +58,15 @@ public class GUIController implements Initializable {
 
     @FXML
     private Button btn_search;
+    
+    @FXML
+    private Button btn_refresh;
+    
+    @FXML
+    private Button btn_reservation;
+    
+    @FXML
+    private Button btn_kd_add;
 
     /**
      * Initializes the controller class.
@@ -71,20 +80,25 @@ public class GUIController implements Initializable {
         bez_list = FXCollections.observableArrayList();
         her_list = FXCollections.observableArrayList();
         her_list.addAll(this.dao.getTitles("Hersteller"));
-        bez_list.addAll(this.dao.getTitles("Bezeichung"));
+        bez_list.addAll(this.dao.getTitles("Bezeichnung"));
         cb_bezeichnung.setItems(bez_list);
         cb_hersteller.setItems(her_list);
 
         //Tabellenspalten anlegen
-        TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("ID");
-        col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("id"));
+       // TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("ID");
+       // col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("id"));
         TableColumn<AutomodellDTO, String> col2 = new TableColumn<AutomodellDTO, String>("Hersteller");
         col2.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("hersteller"));
         TableColumn<AutomodellDTO, String> col3 = new TableColumn<AutomodellDTO, String>("Bezeichnung");
         col3.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("bezeichnung"));
         TableColumn<AutomodellDTO, String> col4 = new TableColumn<AutomodellDTO, String>("PreisTag");
         col4.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("preisTag"));
-        resultView.getColumns().addAll(col1, col2, col3, col4);
+        TableColumn<AutomodellDTO, String> col5 = new TableColumn<AutomodellDTO, String>("Sitzplaetze");
+        col5.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("sitzplaetze"));
+        TableColumn<AutomodellDTO, String> col6 = new TableColumn<AutomodellDTO, String>("Treibstoff");
+        col6.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("treibstoff"));
+        
+        resultView.getColumns().addAll(col2, col3, col4, col5, col6);
 
         //Listener für die Combobox-Auswahl    
         cb_hersteller.setOnAction((event) -> {
