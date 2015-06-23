@@ -33,13 +33,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /**
  * FXML Controller class
  *
- * @author Sven
+ * Projekt für Wahlfach Datenbankprogrammierung
+ * @author Sven Nagel und Patrick Treiber
+ *  
  */
 public class GUIController implements Initializable {
 
     private DBConn connection;
     private Connection conn;
-    private String hersteller;
     private DAOInterface dao;
     
     private ObservableList<String> bez_list;
@@ -47,12 +48,14 @@ public class GUIController implements Initializable {
     private ObservableList<String> autoart_list;
     private ObservableList<String> sitz_list;
     private ObservableList<String> treib_list;
-    private ObservableList<String> kunden_list;
+    private ObservableList<String> kunden_vorname_list;
+    private ObservableList<String> kunden_nachname_list;
     
     private ObservableList<AutomodellDTO> modell_list;
     
     private String her;
     private String bez;
+    private String hersteller;
     private int aid;
     
     private Set<KundeDTO> kunde_set;
@@ -109,7 +112,7 @@ public class GUIController implements Initializable {
     private Button btn_reservation;
     
     @FXML
-    private Button btn_kd_add;
+    private Button btn_kunden_add;
     
     @FXML
     private Button btn_her_set;
@@ -131,8 +134,8 @@ public class GUIController implements Initializable {
         autoart_list = FXCollections.observableArrayList();
         sitz_list = FXCollections.observableArrayList();
         treib_list = FXCollections.observableArrayList();
-        kunden_list = FXCollections.observableArrayList();
-        
+        kunden_vorname_list = FXCollections.observableArrayList();
+        kunden_nachname_list = FXCollections.observableArrayList();
         
         her_list.addAll(this.dao.getTitles("Hersteller"));
         bez_list.addAll(this.dao.getTitles("Bezeichnung"));
@@ -147,17 +150,22 @@ public class GUIController implements Initializable {
         cb_sitzplaetze.setItems(sitz_list);
         cb_treibstoff.setItems(treib_list);
         
+        // Timestamp for reservation
         ArrayList<String> myTime = new ArrayList<String>();
+        myTime.add("08:00:00");
+        myTime.add("09:00:00");
+        myTime.add("10:00:00");
+        myTime.add("11:00:00");
         myTime.add("12:00:00");
         myTime.add("13:00:00");
         myTime.add("14:00:00");
         myTime.add("15:00:00");
+        myTime.add("16:00:00");
+        myTime.add("17:00:00");
         cb_time.getItems().addAll(myTime);
         
 
-        //Tabellenspalten anlegen
-       // TableColumn<AutomodellDTO, String> col1 = new TableColumn<AutomodellDTO, String>("ID");
-       // col1.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("id"));
+        //Tabellenbezeichnungen erzeugen
         TableColumn<AutomodellDTO, String> col2 = new TableColumn<AutomodellDTO, String>("Hersteller");
         col2.setCellValueFactory(new PropertyValueFactory<AutomodellDTO, String>("hersteller"));
         TableColumn<AutomodellDTO, String> col3 = new TableColumn<AutomodellDTO, String>("Bezeichnung");
@@ -173,7 +181,7 @@ public class GUIController implements Initializable {
         
         resultView.getColumns().addAll(col2, col3, col1, col4, col5, col6);
 
-        //Listener für die Combobox-Auswahl  Hersteller mit Abhängigkeit Bezeichnung  
+        //Listenerfür die Abhängigkeit bei der Auswahl Hersteller -> Bezeichnung  
         cb_hersteller.setOnAction((event) -> {
             String herst = cb_hersteller.getSelectionModel().getSelectedItem();
             bez_list.clear();
@@ -183,6 +191,7 @@ public class GUIController implements Initializable {
         });
     }
 
+    // Listener für die Suche von Automodellen 
     @FXML
     public void buttonSearch() {
 
@@ -211,6 +220,7 @@ public class GUIController implements Initializable {
 
     }
     
+    //Auswahl der ComboBoxen zurücksetzen
     @FXML
     public void buttonRefresh(){
         
@@ -219,6 +229,7 @@ public class GUIController implements Initializable {
         cb_autoart.getSelectionModel().clearSelection();
     }
     
+    // ausgewählte row in der resultView in die Reservierung übernehmen
     @FXML
     public void getChoose(){
         
@@ -239,6 +250,7 @@ public class GUIController implements Initializable {
         
     }
     
+    // Kunden aus der Datenbank auslesen 
     @FXML
     public void getKD(){
         
@@ -254,11 +266,11 @@ public class GUIController implements Initializable {
             
         }
         
-        kunden_list.add(k_nachname);
-        kunden_list.add(k_vorname);
+        kunden_nachname_list.add(k_nachname);
+        kunden_vorname_list.add(k_vorname);
         
-        cb_kunde_nachname.setItems(kunden_list);
-        cb_kunde_vorname.setItems(kunden_list);
+        cb_kunde_nachname.setItems(kunden_nachname_list);
+        cb_kunde_vorname.setItems(kunden_vorname_list);
         
     }
     
@@ -292,6 +304,14 @@ public class GUIController implements Initializable {
         
         this.dao.addReservierung(kid, aid, tstart, tende);
         
+        
+    }
+    
+    @FXML
+    public void kundenAdd(){
+        
+        NewFrameKunde kd;
+        kd = new NewFrameKunde();
         
     }
        

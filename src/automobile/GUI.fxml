@@ -44,6 +44,7 @@
       <Pane layoutX="706.0" layoutY="357.0" prefHeight="64.0" prefWidth="524.0" style="-fx-background-color: #256789;">
          <children>
             <Button fx:id="btn_kd_add" layoutX="351.0" layoutY="20.0" mnemonicParsing="false" onAction="#getKD" prefHeight="25.0" prefWidth="150.0" text="Kunden aktualisieren" />
+            <Button fx:id="btn_kunden_add" layoutX="211.0" layoutY="20.0" mnemonicParsing="false" text="Kunden anlegen" />
          </children>
       </Pane>
       <Button fx:id="btn_reservation" layoutX="729.0" layoutY="377.0" mnemonicParsing="false" onAction="#reserverationPrepare" prefHeight="25.0" prefWidth="150.0" text="Reservieren" />
