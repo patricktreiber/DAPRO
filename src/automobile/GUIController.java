@@ -255,7 +255,7 @@ public class GUIController implements Initializable {
     @FXML
     public void getKD(){
         
-        cb_kunde_vorname.getSelectionModel().clearSelection();
+        cb_kunde_vorname.getItems().clear();
         
         Set<KundeDTO> kunde_set = new HashSet<KundeDTO>();
         kunde_set = this.dao.getAllKunden();
