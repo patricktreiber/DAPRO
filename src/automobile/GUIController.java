@@ -24,12 +24,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -144,6 +146,11 @@ public class GUIController implements Initializable {
         sitz_list.addAll(this.dao.getTitles("Sitzplaetze"));
         treib_list.addAll(this.dao.getTitles("Treibstoff"));
         
+        this.start_date.setValue(LocalDate.now());
+        this.ende_date.setValue(LocalDate.now());
+        
+        this.start_date.setDayCellFactory(getCallBack(start_date));
+        this.ende_date.setDayCellFactory(getCallBack(ende_date));
         
         cb_bezeichnung.setItems(bez_list);
         cb_hersteller.setItems(her_list);
@@ -205,6 +212,10 @@ public class GUIController implements Initializable {
         //Werte für Suche aus Combobox holen
         hersteller = cb_hersteller.getValue();
         bezeichnung = cb_bezeichnung.getValue();
+        String sArt = cb_autoart.getValue();
+        
+        art = Integer.parseInt(sArt);
+        
 
         //Modelle aus DB holen
         Set<AutomodellDTO> modelle = dao.getAutomodelle(hersteller, bezeichnung, art, sitzpl, treibstoff);
@@ -309,6 +320,8 @@ public class GUIController implements Initializable {
         
         this.dao.addReservierung(kid, aid, tstart, tende);
         
+       
+        
         
     }
     
@@ -318,6 +331,31 @@ public class GUIController implements Initializable {
         NewFrameKunde kd;
         kd = new NewFrameKunde();
         
+    }
+    
+    public Callback<DatePicker, DateCell> getCallBack(DatePicker dP){
+        
+        final Callback<DatePicker, DateCell> dayCellFactory =
+          new Callback<DatePicker, DateCell>(){
+              @Override
+              public DateCell call(final DatePicker datePicker){
+                  return new DateCell(){
+                      @Override
+                      public void updateItem(LocalDate item, boolean empty){
+                          super.updateItem(item, empty);
+                          if (item.isBefore(
+                                  dP.getValue().plusDays(1))
+                          ){
+                              setDisable(true);
+                              setStyle("-fx-background-color: #ffc0cb;");
+                          }
+                      }
+                  };
+                  
+              }
+          };
+        
+        return dayCellFactory;
     }
        
 
