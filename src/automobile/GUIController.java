@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javafx.collections.FXCollections;
@@ -58,7 +59,7 @@ public class GUIController implements Initializable {
     private String hersteller;
     private int aid;
     
-    private Set<KundeDTO> kunde_set;
+    
     private String k_nachname;
     private String k_vorname;
     private int kid;
@@ -254,6 +255,9 @@ public class GUIController implements Initializable {
     @FXML
     public void getKD(){
         
+        cb_kunde_vorname.getSelectionModel().clearSelection();
+        
+        Set<KundeDTO> kunde_set = new HashSet<KundeDTO>();
         kunde_set = this.dao.getAllKunden();
         
         for(KundeDTO k : kunde_set){
@@ -271,6 +275,7 @@ public class GUIController implements Initializable {
         
         cb_kunde_nachname.setItems(kunden_nachname_list);
         cb_kunde_vorname.setItems(kunden_vorname_list);
+        
         
     }
     
