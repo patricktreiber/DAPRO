@@ -5,10 +5,12 @@
  */
 package Database.DBAccess;
 
+import Database.Resources.AutoartDTO;
 import Database.Resources.KundeDTO;
 import Database.Resources.AutomodellDTO;
 import Database.Resources.ReservierungDTO;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,16 +29,15 @@ public interface DAOInterface {
 
     Set<String> getTitles(String title);
 
+    Set<AutoartDTO> getAllAutoarten();
+
     Set<KundeDTO> getAllKunden();
 
     Set<KundeDTO> getKundeDTObyName(String vorname, String nachname);
-    
+
     Set<ReservierungDTO> getAllReservierungen();
-    
+
     Set<ReservierungDTO> getReservierungByIDs(int k_ID, int m_ID);
-    
-    //Set<ReservierungDTO> getReservierungByKundeID
-    //Set<ReservierungDTO> getReservierungByAutomodellID
 
     KundeDTO getKundeDTObyID(int id);
 

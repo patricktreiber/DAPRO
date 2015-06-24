@@ -5,6 +5,7 @@
  */
 package Database.DBAccess;
 
+import Database.Resources.AutoartDTO;
 import Database.Resources.KundeDTO;
 import Database.Resources.AutomodellDTO;
 import Database.Resources.ReservierungDTO;
@@ -35,7 +36,7 @@ public class DAO implements DAOInterface {
     // final String url = "fbe-neptun.hs-weingarten.de";
     private static final String dbname = "automobile";
     private static final String user = "root";
-    private static final String password = "0000";
+    private static final String password = "";
 
     public DAO() {
         //this.connection = createConnection();
@@ -215,9 +216,13 @@ public class DAO implements DAOInterface {
         return null;
     }
 
-    /*
-     * Under construction
-     * 
+    /**
+     * Reservierug zur Datenbank hinzufügen
+     *
+     * @param kID
+     * @param aID
+     * @param startDate
+     * @param endDate
      */
     @Override
     public void addReservierung(int kID, int aID, Timestamp startDate, Timestamp endDate) {
@@ -564,6 +569,36 @@ public class DAO implements DAOInterface {
             }
         }
 
+        return null;
+    }
+
+    public Set<AutoartDTO> getAllAutoarten() {
+        this.connection = createConnection();
+        HashSet autoarten = new HashSet<AutoartDTO>();
+        
+        String sql = "SELECT * FROM `autoarten`";
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                autoarten.add(new AutoartDTO(rs.getInt("ID"),
+                        rs.getString("Art")));
+            }
+            return autoarten;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
         return null;
     }
 
