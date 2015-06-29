@@ -5,11 +5,11 @@
  */
 package test;
 
-import Database.Resources.AutomodellDTO;
-import Database.DBAccess.DAO;
-import Database.DBAccess.DAOInterface;
-import Database.Resources.KundeDTO;
-import Database.Resources.ReservierungDTO;
+import Database_Resources.AutomodellDTO;
+import Database_DBAccess.DAO;
+import Database_DBAccess.DAOInterface;
+import Database_Resources.KundeDTO;
+import Database_Resources.ReservierungDTO;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

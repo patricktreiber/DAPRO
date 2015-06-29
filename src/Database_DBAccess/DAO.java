@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database.DBAccess;
+package Database_DBAccess;
 
-import Database.Resources.AutoartDTO;
-import Database.Resources.KundeDTO;
-import Database.Resources.AutomodellDTO;
-import Database.Resources.ReservierungDTO;
+import Database_Resources.AutoartDTO;
+import Database_Resources.KundeDTO;
+import Database_Resources.AutomodellDTO;
+import Database_Resources.ReservierungDTO;
 import java.sql.Connection;
 import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
 import java.sql.DatabaseMetaData;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Database.Resources;
+package Database_Resources;
 
 /**
  *
@@ -58,6 +58,9 @@ public class AutomodellDTO {
         this.zuladung = zuladung;
         this.fuehrerscheinKlasse = fuehrerscheinKlasse;
         
+    }
+    
+    public AutomodellDTO(){
     }
 
     /**

@@ -4,7 +4,7 @@
   'http://mybatis.org/dtd/mybatis-3-config.dtd'>
 
 <configuration>
-    <environments dafault="development">
+    <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
@@ -16,6 +16,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="MyBatisDAO/DAOInterface.xml"/>
+        <mapper resource="MyBatisDAO/DAO_XML.xml"/>
+        <!--resource="MyBatisDAO/DAOInterface.xml"-->
     </mappers>
 </configuration>

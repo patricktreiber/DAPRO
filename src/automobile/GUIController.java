@@ -6,11 +6,11 @@
  */
 package automobile;
 
-import Database.Resources.AutomodellDTO;
-import Database.DBAccess.DAO;
-import Database.DBAccess.DAOInterface;
-import Database.Resources.AutoartenSingleton;
-import Database.Resources.KundeDTO;
+import Database_Resources.AutomodellDTO;
+import Database_DBAccess.DAO;
+import Database_DBAccess.DAOInterface;
+import Database_Resources.AutoartenSingleton;
+import Database_Resources.KundeDTO;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Timestamp;

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyBatisDAO.DAOInterface">
+    
+    <resultMap id="AutomodellMap" type="Database_Resources.AutomodellDTO">
+        <result property="id" column="ID"/>
+        <result property="hersteller" column="Hersteller"/>
+        <result property="bezeichnung" column="Bezeichnung"/>
+        <result property="autoart" column="Autoart"/>
+        <result property="sitzplaetze" column="Sitzplaetze"/>
+        <result property="kw" column="kw"/>
+        <result property="treibstoff" column="Treibstoff"/>
+        <result property="preisTag" column="PreisTag"/>
+        <result property="preisKM" column="PreisKM"/>
+        <result property="achsen" column="Achsen"/>
+        <result property="ladevolumen" column="Ladevolumen"/>
+        <result property="zuladung" column="Zuladung"/>
+        <result property="fuehrerscheinKlasse" column="Fuehrerschein"/>
+    </resultMap>
+    
+    <select id="getAutomodelle" resultMap="AutomodellMap">
+        SELECT * FROM automodell
+        <trim prefix="WHERE" prefixOverrides="AND |OR "> 
+            <if test="hersteller != null">
+                hersteller = #{hersteller}
+            </if>
+          
+            <if test="bezeichnung != null">
+                AND bezeichnung = #{bezeichnung}
+            </if>
+          
+            <if test="art > 0">
+                AND Autoart = #{art}
+            </if>
+          
+            <if test="sitzplaetze > 0">
+                AND Sitzplaetze = #{sitzplaetze}
+            </if>
+          
+            <if test="treibstoff != null">
+                AND Treibstoff = #{treibstoff}
+            </if>
+        </trim>
+    </select>  
+</mapper>
+ 
+   

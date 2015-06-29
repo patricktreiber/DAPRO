@@ -5,7 +5,9 @@
  */
 package MyBatisDAO;
 
-import Database.Resources.KundeDTO;
+import Database_Resources.AutomodellDTO;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -13,6 +15,10 @@ import Database.Resources.KundeDTO;
  */
 public interface DAOInterface {
     
-    public KundeDTO getKundebyID(int id);
+    List<AutomodellDTO> getAutomodelle(String hersteller,
+            String bezeichnung,
+            int art,
+            int sitzplaetze,
+            String treibstoff);
     
 }
