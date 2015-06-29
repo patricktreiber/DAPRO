@@ -36,7 +36,7 @@ public class DAO implements DAOInterface {
     // final String url = "fbe-neptun.hs-weingarten.de";
     private static final String dbname = "automobile";
     private static final String user = "root";
-    private static final String password = "";
+    private static final String password = "0000";
 
     public DAO() {
         //this.connection = createConnection();

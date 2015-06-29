@@ -33,6 +33,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -326,6 +328,7 @@ public class GUIController implements Initializable {
         if (tstart.after(tende)) {
 
             System.err.println("ABBRUCH: Start-Datum nach Ende-Datum!");
+            JOptionPane.showMessageDialog(null, "Die Reservierung war nicht erfolgreich", "Fehler", aid);
             return;
 
         }
@@ -334,6 +337,7 @@ public class GUIController implements Initializable {
         System.out.println(aid);
 
         this.dao.addReservierung(kid, aid, tstart, tende);
+        JOptionPane.showMessageDialog(null, "Die Reservierung war erfolgreich", "Erfolgreich", aid);
 
     }
 
